@@ -24,7 +24,7 @@ const routesToPrerender = [
   '/glam-photo-booth-tampa-fl',
   '/classic-photo-booth-tampa-fl',
   '/corporate-photo-booth-tampa-fl',
-  '/request-a-quote'
+  '/request-a-quote',
   '/st-petersburg'
 ]
 

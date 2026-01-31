@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import GlamBooth from "./pages/GlamBooth";
 import ClassicBooth from "./pages/ClassicBooth";
 import CorporateEvents from "./pages/CorporateEvents";
+import StPetersburg from "./pages/StPetersburg";
 import RequestQuote from "./pages/RequestQuote";
 import NotFound from "./pages/NotFound";
 
@@ -19,6 +20,7 @@ const App = () => (
       <Sonner />
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/st-petersburg" element={<StPetersburg />} />
         <Route path="/glam-photo-booth-tampa-fl" element={<GlamBooth />} />
         <Route path="/classic-photo-booth-tampa-fl" element={<ClassicBooth />} />
         <Route path="/corporate-photo-booth-tampa-fl" element={<CorporateEvents />} />

@@ -28,12 +28,31 @@ const routesToPrerender = [
   '/st-petersburg'
 ]
 
+/**
+ * PAGE TITLES
+ * 
+ * Per-route <title> tags. Format: "Page Title | Site Name"
+ * Any route not listed here falls back to the <title> already in index.html.
+ */
+const pageTitles = {
+  '/': 'Luxury Photo Booth Rentals Tampa FL | Glow Photo Booth',
+  '/glam-photo-booth-tampa-fl': 'Glam Photo Booth Tampa FL | Glow Photo Booth',
+  '/classic-photo-booth-tampa-fl': 'Classic Photo Booth Tampa FL | Glow Photo Booth',
+  '/corporate-photo-booth-tampa-fl': 'Corporate Photo Booth Tampa FL | Glow Photo Booth',
+  '/request-a-quote': 'Request a Quote | Glow Photo Booth',
+  '/st-petersburg': 'Photo Booth Rentals in St. Petersburg, FL | Glow Photo Booths'
+}
+
 ;(async () => {
   for (const url of routesToPrerender) {
     const appHtml = render(url)
-    const html = template.replace('<!--app-html-->', appHtml)
+    let html = template.replace('<!--app-html-->', appHtml)
 
-    const filePath = `dist${url === '/' ? '/index' : url}.html`
+    if (pageTitles[url]) {
+      html = html.replace(/<title>.*?<\/title>/, `<title>${pageTitles[url]}</title>`)
+    }
+
+    const filePath = url === '/' ? 'dist/index.html' : `dist${url}/index.html`
     const absolutePath = toAbsolute(filePath)
     
     // Ensure the directory exists before writing the file

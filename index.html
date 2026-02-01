@@ -30,6 +30,17 @@
   </head>
 
   <body>
+    <!-- Hidden form for Netlify Forms detection (must match React form fields) -->
+    <form name="quote-request" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="eventType" />
+      <input type="date" name="eventDate" />
+      <input type="text" name="eventLocation" />
+      <textarea name="message"></textarea>
+    </form>
+
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

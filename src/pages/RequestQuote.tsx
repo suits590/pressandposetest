@@ -41,24 +41,47 @@ const RequestQuote = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "quote-request",
+          ...formData,
+        }).toString(),
+      });
 
-    toast({
-      title: "Quote Request Received",
-      description: "Thank you for your inquiry. We'll be in touch within 24 hours.",
-    });
+      if (response.ok) {
+        toast({
+          title: "Quote Request Received",
+          description: "Thank you for your inquiry. We'll be in touch within 24 hours.",
+        });
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      eventType: "",
-      eventDate: "",
-      eventLocation: "",
-      message: "",
-    });
-    setIsSubmitting(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          eventType: "",
+          eventDate: "",
+          eventLocation: "",
+          message: "",
+        });
+      } else {
+        toast({
+          title: "Submission Error",
+          description: "There was a problem submitting your request. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Submission Error",
+        description: "There was a problem submitting your request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const eventTypes = [
@@ -89,7 +112,21 @@ const RequestQuote = () => {
 
           {/* Form */}
           <div className="max-w-xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form
+              name="quote-request"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              className="space-y-8"
+            >
+              <input type="hidden" name="form-name" value="quote-request" />
+              {/* Honeypot field for spam protection */}
+              <p className="hidden">
+                <label>
+                  Don't fill this out if you're human: <input name="bot-field" />
+                </label>
+              </p>
               {/* Name */}
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-sm tracking-wide">
